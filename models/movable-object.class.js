@@ -2,8 +2,8 @@ class MovableObject {
     x = 0;
     y = 150;
     img;
-    height = 245;
-    width = 200;
+    width = 200;  // Breite für Character
+    height = 245; // Höhe für Character
 
     loadImage(path) {
         this.img = new Image(); 

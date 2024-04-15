@@ -5,6 +5,15 @@ class World {
         new PufferFish(),
         new PufferFish(),
     ];
+    lights = [
+        new Lights()
+    ];
+    backgroundObjects = [
+        new BackgroundObject('img/background/layers/water/d1.png', 0),
+        new BackgroundObject('img/background/layers/fondo2/d1.png', 0),
+        new BackgroundObject('img/background/layers/fondo1/d1.png', 0),
+        new BackgroundObject('img/background/layers/floor/d1.png', 0),
+    ];
     canvas;
     ctx;
 
@@ -16,14 +25,24 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // clearRect löscht canvas
-        this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
-        this.enemies.forEach(enemy => { // forEach, weil Array mit mehreren Enemies 
-            this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
-        });
+        this.addObjectsToMap(this.backgroundObjects);
+        this.addObjectsToMap(this.lights);
+        this.addToMap(this.character);
+        this.addObjectsToMap(this.enemies);
 
         let self = this; // Hilfsvariable weil this in requestAnimationFrame nicht funktioniert
         requestAnimationFrame(function () { // draw() wird mit callback function immer wieder aufgerufen
             self.draw();
         });
     };
+
+    addObjectsToMap(objects) { // für Arrays
+        objects.forEach(object => {
+            this.addToMap(object);
+        })
+    }
+
+    addToMap(movableObject) {
+        this.ctx.drawImage(movableObject.img, movableObject.x, movableObject.y, movableObject.width, movableObject.height);
+    }
 }

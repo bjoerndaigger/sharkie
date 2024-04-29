@@ -13,8 +13,6 @@ this.animate();
     }
 
     animate() {
-        setInterval(() => {
-            this.x -= 0.05;
-        }, 1000 / 60);
+        this.moveLeft();
     }
 }

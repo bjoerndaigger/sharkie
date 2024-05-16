@@ -7,6 +7,7 @@ class MovableObject {
     imageCache = {}; // Objekt für Animationsbilder
     currentImage = 0; // für animate()-Funktion, die die Bilder aufruft
     speed = 0.05; // Geschwindigkeit für Bewegung nach links
+    otherDirection = false;
 
     loadImage(path) {
         this.img = new Image(); 

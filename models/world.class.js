@@ -1,39 +1,10 @@
 class World {
     character = new Character();
-    enemies = [
-        new PufferFish(),
-        new PufferFish(),
-        new PufferFish(),
-    ];
-    lights = [
-        new Lights()
-    ];
-    backgroundObjects = [
-        new BackgroundObject('img/background/layers/water/d2.png', -720),
-        new BackgroundObject('img/background/layers/fondo2/d2.png', -720),
-        new BackgroundObject('img/background/layers/fondo1/d2.png', -720),
-        new BackgroundObject('img/background/layers/floor/d2.png', -720),
-        new BackgroundObject('img/background/layers/water/d1.png', 0),
-        new BackgroundObject('img/background/layers/fondo2/d1.png', 0),
-        new BackgroundObject('img/background/layers/fondo1/d1.png', 0),
-        new BackgroundObject('img/background/layers/floor/d1.png', 0),
-        new BackgroundObject('img/background/layers/water/d2.png', 720),
-        new BackgroundObject('img/background/layers/fondo2/d2.png', 720),
-        new BackgroundObject('img/background/layers/fondo1/d2.png', 720),
-        new BackgroundObject('img/background/layers/floor/d2.png', 720),
-        new BackgroundObject('img/background/layers/water/d1.png', 1440),
-        new BackgroundObject('img/background/layers/fondo2/d1.png', 1440),
-        new BackgroundObject('img/background/layers/fondo1/d1.png', 1440),
-        new BackgroundObject('img/background/layers/floor/d1.png', 1440),
-        new BackgroundObject('img/background/layers/water/d2.png', 2160),
-        new BackgroundObject('img/background/layers/fondo2/d2.png', 2160),
-        new BackgroundObject('img/background/layers/fondo1/d2.png', 2160),
-        new BackgroundObject('img/background/layers/floor/d2.png', 2160),
-    ];
+    level = level1;
     canvas;
     ctx;
     keyboard;
-    camera_x = 0; // Startposition für Verschiebung des Hintergrundes
+    camera_x = 0; // Startposition für Verschiebung der Camera (Hintergrund) während des bewegens des Characters nach links oder rechts
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -52,10 +23,10 @@ class World {
 
         this.ctx.translate(this.camera_x, 0); // verschieben von Hintergrund mit Character
 
-        this.addObjectsToMap(this.backgroundObjects);
-        this.addObjectsToMap(this.lights);
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.lights);
         this.addToMap(this.character);
-        this.addObjectsToMap(this.enemies);
+        this.addObjectsToMap(this.level.enemies);
 
         this.ctx.translate(-this.camera_x, 0);
 

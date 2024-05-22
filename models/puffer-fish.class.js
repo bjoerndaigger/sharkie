@@ -23,10 +23,7 @@ class PufferFish extends MovableObject {
         this.moveLeft();
 
         setInterval(() => {
-            let i = this.currentImage % this.IMAGES_SWIMMING.length; // Modulo Operator (mathematischer Rest um durch Array in Schleife zu iterieren)
-            let path = this.IMAGES_SWIMMING[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+           this.playAnimation(this.IMAGES_SWIMMING);
         }, 200)
     }
 

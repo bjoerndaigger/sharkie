@@ -16,7 +16,7 @@ class MovableObject {
 
     /**
      * 
-     * @param {array} array - Arrayb enthält bewegte Bilder von Character['img/image1.png', 'img/image2.png', ...]
+     * @param {array} array - Array enthält bewegte Bilder von Character['img/image1.png', 'img/image2.png', ...]
      */
     loadImages(array) { 
         array.forEach((path) => { // iteriert über jedes Element der übergebenen Array
@@ -24,6 +24,13 @@ class MovableObject {
             img.src = path; // weist dem Bild den aktuellen Pfad aus dem Array zu
             this.imageCache[path] = img; // speichert den Bildpfad im imageCache-Objekt
         });  
+    }
+
+    playAnimation(images) {
+        let i = this.currentImage % images.length; // Modulo Operator (mathematischer Rest um durch Array in Schleife zu iterieren)
+        let path = images[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
     }
 
     moveRight() {

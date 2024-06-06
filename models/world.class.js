@@ -44,17 +44,26 @@ class World {
 
     addToMap(movableObject) {
         if (movableObject.otherDirection) { // Überprüft, ob das bewegliche Objekt in die andere Richtung zeigen soll
-            this.ctx.save(); // Speichert den aktuellen Zustand des Zeichenkontexts, damit Änderungen rückgängig gemacht werden können
-            this.ctx.translate(movableObject.width, 0); // Verschiebt den Ursprung des Koordinatensystems um die Breite des beweglichen Objekts nach rechts
-            this.ctx.scale(-1, 1) // Spiegelt das Objekt horizontal, um die andere Richtung darzustellen
-            movableObject.x = movableObject.x * -1; // Passt die x-Position des Objekts an, um es an der richtigen Stelle zu zeichnen
+            this.flipImage(movableObject);
         }
 
-        this.ctx.drawImage(movableObject.img, movableObject.x, movableObject.y, movableObject.width, movableObject.height);
+        movableObject.draw(this.ctx);
+        movableObject.drawFrame(this.ctx);
 
         if (movableObject.otherDirection) { // Rückgängigmachen der Transformationen bei Bedarf
-            movableObject.x = movableObject.x * -1;
-            this.ctx.restore();
+            this.flipImageBack(movableObject);
         }
+    }
+
+    flipImage(movableObject) {
+        this.ctx.save(); // Speichert den aktuellen Zustand des Zeichenkontexts, damit Änderungen rückgängig gemacht werden können
+        this.ctx.translate(movableObject.width, 0); // Verschiebt den Ursprung des Koordinatensystems um die Breite des beweglichen Objekts nach rechts
+        this.ctx.scale(-1, 1) // Spiegelt das Objekt horizontal, um die andere Richtung darzustellen
+        movableObject.x = movableObject.x * -1; // Passt die x-Position des Objekts an, um es an der richtigen Stelle zu zeichnen
+    }
+
+    flipImageBack(movableObject) {
+        movableObject.x = movableObject.x * -1;
+        this.ctx.restore();
     }
 }

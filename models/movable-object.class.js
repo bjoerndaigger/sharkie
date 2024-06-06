@@ -10,7 +10,7 @@ class MovableObject {
     otherDirection = false;
 
     loadImage(path) {
-        this.img = new Image(); 
+        this.img = new Image();
         this.img.src = path;
     }
 
@@ -18,12 +18,25 @@ class MovableObject {
      * 
      * @param {array} array - Array enthält bewegte Bilder von Character['img/image1.png', 'img/image2.png', ...]
      */
-    loadImages(array) { 
+    loadImages(array) {
         array.forEach((path) => { // iteriert über jedes Element der übergebenen Array
             let img = new Image(); // erzeugt ein neues Image-Objekt
             img.src = path; // weist dem Bild den aktuellen Pfad aus dem Array zu
             this.imageCache[path] = img; // speichert den Bildpfad im imageCache-Objekt
-        });  
+        });
+    }
+
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
+    // Rectangle (Rahmen für Kollisionen)
+    drawFrame(ctx) {
+           ctx.beginPath();
+           ctx.lineWidth = '5';
+           ctx.strokeStyle = 'blue';
+           ctx.rect(this.x, this.y, this.width, this.height);
+           ctx.stroke();
     }
 
     playAnimation(images) {
@@ -34,12 +47,18 @@ class MovableObject {
     }
 
     moveRight() {
-
+        this.x += this.speed;
     }
 
     moveLeft() {
-        setInterval(() => {
-            this.x -= this.speed;
-        }, 1000 / 60);
+        this.x -= this.speed;
+    }
+
+    moveUp() {
+        this.y -= this.speed;
+    }
+
+    moveDown() {
+        this.y += this.speed;
     }
 }

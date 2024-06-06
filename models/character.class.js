@@ -36,7 +36,6 @@ class Character extends MovableObject {
         super().loadImage(this.IMAGES_IDLE[0]); // mit super() greife ich auf den Konstruktor der über geordneten Klasse zu (in diesem Fall MovableObject) und sorge dafür, dass dieser zuerst ausgeführt wird, bevor der Konstruktor der untergeordneten Klasse ausgeführt wird
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_SWIMMING);
-
         this.animate();
     }
 
@@ -69,23 +68,24 @@ class Character extends MovableObject {
     }
 
     swimRight() {
-        this.x += this.speed;
+        this.moveRight();
         this.otherDirection = false;
         this.swimming_sound.play();
     }
-    
+
     swimLeft() {
-        this.x -= this.speed;
+        this.moveLeft();
         this.otherDirection = true;
         this.swimming_sound.play();
     }
+
     swimUp() {
-        this.y -= this.speed;
+        this.moveUp();
         this.swimming_sound.play();
     }
 
     swimDown() {
-        this.y += this.speed;
+        this.moveDown();
         this.swimming_sound.play();
     }
 }

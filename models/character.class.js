@@ -31,6 +31,13 @@ class Character extends MovableObject {
     world; // Variable für Zugriff auf world
     swimming_sound = new Audio('audio/swimming.mp3');
 
+    offset = {
+        top: 120,
+        left: 40,
+        right: 40,
+        bottom: 60
+    };
+
 
     constructor() {
         super().loadImage(this.IMAGES_IDLE[0]); // mit super() greife ich auf den Konstruktor der über geordneten Klasse zu (in diesem Fall MovableObject) und sorge dafür, dass dieser zuerst ausgeführt wird, bevor der Konstruktor der untergeordneten Klasse ausgeführt wird

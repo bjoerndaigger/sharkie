@@ -8,6 +8,14 @@ class MovableObject {
     currentImage = 0; // für animate()-Funktion, die die Bilder aufruft
     speed = 0.05; // Geschwindigkeit für Bewegung nach links
     otherDirection = false;
+    energy = 100;
+
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    };
 
     loadImage(path) {
         this.img = new Image();
@@ -32,12 +40,30 @@ class MovableObject {
 
     // Rectangle (Rahmen für Kollisionen)
     drawFrame(ctx) {
-           ctx.beginPath();
-           ctx.lineWidth = '5';
-           ctx.strokeStyle = 'blue';
-           ctx.rect(this.x, this.y, this.width, this.height);
-           ctx.stroke();
+        if (this instanceof Character || this instanceof PufferFish) { // sorgt dafür, dasss Rahmen nur um die entsprechenden Instanzen angezeigt wird 
+            ctx.beginPath();
+            ctx.lineWidth = '3';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+            ctx.beginPath(); // offset frame
+            ctx.lineWidth = '3'; 
+            ctx.strokeStyle = 'red'; 
+            ctx.rect(this.x + this.offset.left, this.y + this.offset.top, this.width - this.offset.right - this.offset.left, this.height - this.offset.top - this.offset.bottom);
+            ctx.stroke(); 
+        }
     }
+
+    // character.isColliding(chicken)
+    isColliding(mo) {
+        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
+    }
+
+
+
 
     playAnimation(images) {
         let i = this.currentImage % images.length; // Modulo Operator (mathematischer Rest um durch Array in Schleife zu iterieren)

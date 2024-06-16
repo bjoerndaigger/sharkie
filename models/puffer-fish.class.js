@@ -11,6 +11,14 @@ class PufferFish extends MovableObject {
         './img/enemies/puffer-fish/swim/swim5.png'
     ];
 
+
+    offset = {
+        top: 20,
+        left: 10,
+        right: 20,
+        bottom: 40
+    };
+
     constructor() {
         super().loadImage('./img/enemies/puffer-fish/swim/swim1.png'); // mit super() greife ich auf den Konstruktor der über geordneten Klasse zu (in diesem Fall MovableObject) und sorge dafür, dass dieser zuerst ausgeführt wird, bevor der Konstruktor der untergeordneten Klasse ausgeführt wird
         this.loadImages(this.IMAGES_SWIMMING);

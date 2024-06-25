@@ -9,6 +9,7 @@ class MovableObject {
     speed = 0.05; // Geschwindigkeit für Bewegung nach links
     otherDirection = false;
     energy = 100;
+    lastHit = 0;
 
     offset = {
         top: 0,
@@ -47,10 +48,10 @@ class MovableObject {
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.stroke();
             ctx.beginPath(); // offset frame
-            ctx.lineWidth = '3'; 
-            ctx.strokeStyle = 'red'; 
+            ctx.lineWidth = '3';
+            ctx.strokeStyle = 'red';
             ctx.rect(this.x + this.offset.left, this.y + this.offset.top, this.width - this.offset.right - this.offset.left, this.height - this.offset.top - this.offset.bottom);
-            ctx.stroke(); 
+            ctx.stroke();
         }
     }
 
@@ -62,7 +63,32 @@ class MovableObject {
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
 
+    hit() {
+        this.energy -= 5;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
 
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit; // Differenz in ms
+        timepassed = timepassed / 1000; // Difference in sec
+        return timepassed < 1;
+    }
+
+    isDead() {
+        return this.energy == 0;
+    }
+
+
+    // isColliding(obj) {
+    //     return (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) &&
+    //         (this.Y + this.offsetY + this.height) >= obj.Y &&
+    //         (this.Y + this.offsetY) <= (obj.Y + obj.height) &&
+    //         obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+    // }
 
 
     playAnimation(images) {

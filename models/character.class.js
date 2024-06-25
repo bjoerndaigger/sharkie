@@ -28,6 +28,27 @@ class Character extends MovableObject {
         'img/sharkie/idle/17.png',
         'img/sharkie/idle/18.png',
     ];
+    IMAGES_HURT = [
+        'img/sharkie/hurt/poisoned/1.png',
+        'img/sharkie/hurt/poisoned/2.png',
+        'img/sharkie/hurt/poisoned/3.png',
+        'img/sharkie/hurt/poisoned/4.png',
+        'img/sharkie/hurt/poisoned/5.png',
+    ];
+    IMAGES_DEAD = [
+        'img/sharkie/dead/poisoned/1.png',
+        'img/sharkie/dead/poisoned/2.png',
+        'img/sharkie/dead/poisoned/3.png',
+        'img/sharkie/dead/poisoned/4.png',
+        'img/sharkie/dead/poisoned/5.png',
+        'img/sharkie/dead/poisoned/6.png',
+        'img/sharkie/dead/poisoned/7.png',
+        'img/sharkie/dead/poisoned/8.png',
+        'img/sharkie/dead/poisoned/9.png',
+        'img/sharkie/dead/poisoned/10.png',
+        'img/sharkie/dead/poisoned/11.png',
+        'img/sharkie/dead/poisoned/12.png',
+    ]
     world; // Variable für Zugriff auf world
     swimming_sound = new Audio('audio/swimming.mp3');
 
@@ -43,6 +64,8 @@ class Character extends MovableObject {
         super().loadImage(this.IMAGES_IDLE[0]); // mit super() greife ich auf den Konstruktor der über geordneten Klasse zu (in diesem Fall MovableObject) und sorge dafür, dass dieser zuerst ausgeführt wird, bevor der Konstruktor der untergeordneten Klasse ausgeführt wird
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_SWIMMING);
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
         this.animate();
     }
 
@@ -66,7 +89,12 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+            }else if(this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            } 
+            else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
                 this.playAnimation(this.IMAGES_SWIMMING); // swim animation
             } else {
                 this.playAnimation(this.IMAGES_IDLE);
